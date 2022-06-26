@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "autostop",
+  "version": "${version}",
+  "name": "AutoStop",
+  "description": "Automatically stops the server at the set time. Use a custom start file to restart it automatically!",
+  "authors": [
+    "FlashHUN"
+  ],
+  "contact": {},
+  "license": "unlicense",
+  "icon": "assets/autostop/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "flash.autostop.Main"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
