@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
+    id "com.github.johnrengelman.shadow" version "7.1.0"
 }
 
 version = project.mod_version
@@ -23,7 +24,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-    implementation 'de.maxhenkel.configbuilder:configbuilder:1.0.5'
+    implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
+    shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
 }
 
 processResources {
@@ -80,4 +82,18 @@ publishing {
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
     }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+    classifier 'shadow-dev'
+    relocate 'de.maxhenkel.configbuilder', "de.maxhenkel.${project.archives_base_name}.configbuilder"
+}
+
+prepareRemapJar {
+    dependsOn shadowJar
+}
+
+remapJar {
+    input = shadowJar.archiveFile.get()
 }
