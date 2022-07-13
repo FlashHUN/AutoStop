@@ -21,9 +21,8 @@ public class Main implements ModInitializer {
 
         ServerTickCallback.EVENT.register(listener -> {
             LocalTime now = LocalTime.now();
-            int hour = now.getHour();
             int hourToRestart = SERVER_CONFIG.hourToRestart.get();
-            if (hour == hourToRestart) {
+            if (now.getHour() == hourToRestart && now.getMinute() == 0 && now.getSecond() == 0) {
                 ServerCommandSource source = listener.getCommandSource().withSilent();
                 listener.getCommandManager().execute(source, "stop");
             }
